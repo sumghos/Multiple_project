@@ -13,7 +13,7 @@ class HandleRequests(http.server.BaseHTTPRequestHandler):
 
     @REQUEST_INPROGRESS.track_inprogress()
     def do_GET(self):
-       # REQUEST_INPROGRESS.inc()
+        #REQUEST_INPROGRESS.inc()
         time.sleep(5)
         self.send_response(200)
         self.send_header("Content-type", "text/html")
@@ -22,7 +22,7 @@ class HandleRequests(http.server.BaseHTTPRequestHandler):
         self.wfile.close()
         REQUEST_LAST_SERVED.set_to_current_time()
        # REQUEST_LAST_SERVED.set(time.time())
-       #REQUEST_INPROGRESS.dec()
+        #REQUEST_INPROGRESS.dec()
 
 if __name__ == "__main__":
     start_http_server(METRICS_PORT)
