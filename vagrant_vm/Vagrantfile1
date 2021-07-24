@@ -1,0 +1,14 @@
+ENV['VAGRANT_DEFAULT_PROVIDER'] = 'docker'
+DOCKER_HOST_NAME = "dockerhost"
+DOCKER_HOST_VAGRANTFILE = "./DockerHostVagrantfile"
+Vagrant.configure("2") do |config|
+  config.vm.define "application1" do |a|
+    a.vm.network :private_network, type: "dhcp", name: "my-custom-network"
+    a.vm.provider "docker" do |d|
+      d.image = "centos"
+      d.name = "app"
+      d.run
+      d.remains_running = true
+    end
+  end
+end

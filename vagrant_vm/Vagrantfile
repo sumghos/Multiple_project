@@ -1,0 +1,24 @@
+VAGRANTFILE_API_VERSION = "2"
+
+ENV['VAGRANT_DEFAULT_PROVIDER'] ||= 'docker'
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.define "mysql" do |v|
+    v.vm.provider "docker" do |d|
+      d.image = "mysql"
+      d.env = {
+        MYSQL_ROOT_PASSWORD: "makapaka"
+      }
+    end
+  end
+
+  config.vm.define "app" do |v|
+    v.vm.provider "docker" do |d|
+      #d.build_dir = "."
+      d.image = "ubuntu:trusty"
+      d.cmd = ["/bin/bash", "-l"]
+      d.has_ssh = true
+    end
+  end
+
+end

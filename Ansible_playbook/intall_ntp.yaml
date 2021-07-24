@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  become: yes
+  tasks:
+  - yum : name=httpd state=present
+  - service : name=httpd state=started enabled=yes 
+
