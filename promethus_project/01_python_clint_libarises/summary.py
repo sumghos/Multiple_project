@@ -13,7 +13,7 @@ class HandleRequests(http.server.BaseHTTPRequestHandler):
     @REQUEST_RESPOND_TIME.time() # in build decorator to get the code latency 
     def do_GET(self):        
         #start_time = time.time()
-        time.sleep(6)
+        time.sleep(2)
         self.send_response(200)
         self.send_header("Content-type", "text/html")
         self.end_headers()

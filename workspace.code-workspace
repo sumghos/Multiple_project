@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "../../software/node_exporter-1.1.2.linux-amd64"
+		},
+		{
+			"path": "../../software/alertmanager"
 		}
 	],
 	"settings": {}
