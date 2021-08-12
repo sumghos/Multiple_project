@@ -1,0 +1,16 @@
+---
+#The core version you want to use (e.g: 8.5.x, 8.6.x)
+drupal_core_version : "8.5.x"
+
+#The Path where Drupal will be downloaded and installed
+
+drupal_core_path: "/var/www/drupal-{{ drupal_core_version }}-dev"
+
+# The Resulting domain will be [domain].test (with .test )
+
+domain: "drupal"
+
+# Your Durpal site name
+durpal_site_name : " Durpal Test"
+
+
