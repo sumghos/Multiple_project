@@ -1,0 +1,9 @@
+{
+    "name": "examplenodeapp",
+    "description": "Example Express nodejs app.",
+    "author": "sumit ghosh <neo2sumitghosh@gamil.com>",
+    "dependencies": {
+        "express": "3.x.x"
+    },
+    "engine": "node >=0.10.6"
+}
