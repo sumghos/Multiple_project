@@ -1,0 +1,6 @@
+---
+ - hosts: localhost
+   become: true
+   become_user: root
+   roles: 
+    - apache
