@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+  become : yes
+ 
+  tasks: 
+    - name : Install Apacha 
+      command : yum install --quiet -y httpd httpd-devel 
+    - name : Copy the configugation file 
+      command : >
+        cp ../configs/httpd_config/httpd.conf /etc/httpd/conf/httpd.conf
+    - command : >
+        cp ../configs/httpd_config/httpd-vhosts.conf /etc/httpd/conf/httpd-vahosts.conf
+    -  name : Start and configure apacha 
+       command : service httpd start        

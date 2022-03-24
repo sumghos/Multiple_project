@@ -1,0 +1,20 @@
+#This code is enables proxy set up in m/C
+---
+- hosts : localhost
+  vars :
+    proxy_state : present
+  tasks :
+#configure proxy set up by updating the /etc/environment
+    - name : Configure the proxy
+      lineinfile :
+        dest : /etc/environment
+        regexp : "{{ item.regexp }}"
+        line : "{{ item.line }}"
+        state : "{{ proxy_state }}"
+      with_items :
+        - regexp : "^http_proxy="
+          line : "http_proxy=https://example-proxy:80/"
+        - regexp : "^https_proxy="
+          line : "https_proxy=https://example-proxy:443/"
+        - regexp : "^ftp_proxy="
+          line :  "ftp_proxy=http://example-proxy:80/"

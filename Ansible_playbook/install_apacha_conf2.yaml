@@ -1,0 +1,24 @@
+#installing apacha server with ansible module 
+---
+- hosts: localhost
+  become: yes
+  tasks :
+    - name : instsall Apacha 
+      dnf : name={{ item }} state=present 
+      with_items :
+      - httpd 
+      - httpd-devel 
+    - name : Copy Configuration files .
+      copy :
+        src : "{{ item.src }}"  
+        dest : "{{ item.dest }}"
+        owner : root 
+        group : root 
+        mode : 0644
+      with_items:
+      - src : "../configs/httpd_config/httpd.conf" 
+        dest : "/etc/httpd/conf/httpd.conf" 
+      - src : "../configs/httpd_config/httpd-vhosts.conf"  
+        dest : "/etc/httpd/conf/httpd-vahosts.conf"
+    - name : Make sure Apacha is started now at boot
+      service : name=httpd state=started  enabled=yes     
