@@ -1,0 +1,3 @@
+---
+- name: Installation of HTTPD package 
+  yum: name=httpd state=latest

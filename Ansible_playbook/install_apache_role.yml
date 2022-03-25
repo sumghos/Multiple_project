@@ -1,6 +1,7 @@
 ---
  - hosts: localhost
+   gather_facts: no
    become: true
    become_user: root
    roles: 
-    - apache
+   - apache
