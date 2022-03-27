@@ -1,0 +1,48 @@
+---
+- host: patching
+  become: ture 
+  become_user: root
+  tasks:
+        - name: verify App/database are running or not 
+          shell: if ps -eaf| egrep 'httpd' | grep -v grep >/dev/null; then echo 'process_running';else echo 'process_not_running';fi
+          ignore_errors: ture
+          register: app_proc_check
+        - debug: msg="{{app_proc_check.stdout}}" 
+        - name: Decision point to start patching 
+          fail:
+            when: app_proc_check.stdout=="poprocess_running"   
+        - name: copy the kernal patch repo file 
+          copy:
+                src: files/kernel.repo
+                dest: /etc/yum.repos.d/
+        - name: Current kernel version 
+          shell: uname -r
+          register: curr_ker
+        - name: Initiation patching
+          yum:
+                name=kernel
+                state=latest
+          register: yum_update
+        - debug: msg:"kernel has been updated "
+          when: yum_update.rc==0
+#Note : .rc with provide the last execution was succesful or not ...
+        - name: checking if reboot is require or not 
+          shell: kernel_new=$(rpm -qa --last kernel | head -1 | awk '{print $1}'| sed 's/kernel-//g' );kernel_now=$(uname -r);if[[$kernel_new!=$kernel_now]];then echo "Reboot is required";else echo "Reboot is not Required"; fi
+          ignore_errors: ture
+          register: reboot_check
+        - debug: msg = "{{reboot_check.stdout}}"
+        #- name: reboot after patching 
+        #  command: reboot
+        #  when: reboot_check.stdout=="Reboot is required"
+        - name: Reboot system after patching
+          shell: "shutdown -r Y now"
+          async:
+          poll: 0
+        - name : Wait the system to come up 
+          pause:
+                  minutes: 1
+        - name : New Kernel Version 
+          shell: uname -r
+          register: new_ker
+        - debug: msg = "New kernel versions is {{new_ker.stdout}} and old kernel version was {{curr_ker.stdout}}"              
+
