@@ -1,0 +1,135 @@
+#!/bin/bash
+clear
+#"This script is created by Shikhar Verma"
+BIRed='\033[1;91m'        # Red
+BIGreen='\033[1;92m'      # Green
+BIYellow='\033[1;93m'     # Yellow
+BIBlue='\033[1;94m'       # Blue
+BIPurple='\033[1;95m'     # Purple
+BICyan='\033[1;96m'       # Cyan
+NORMAL="\033[0;39m"
+clear
+target=None
+app_head()
+{
+  echo -e $BIYellow"------------------------------------------------------------------------------------------------------------------"
+          echo -e "Automation Tool to Automate Day to Day Unix Activity!!!!\c"
+          echo -e "\tTerget Server = $target"
+          echo -e "------------------------------------------------------------------------------------------------------------------"$NORMAL
+}
+
+while true
+ do
+   app_head
+    echo -e $BIRed " Please select choice from below manu \n"
+    echo -e  " 1. Pre-Validation \n"
+    echo -e " 2. User Administration \n "
+    echo -e " 3. Run AD Hoc Commands \n"
+    echo  -e " 22. Options \n"
+    echo -e  " 0. EXIT \n"$NORMAL
+    read choice
+    case $choice in
+    0)
+    break
+    ;;
+    1)
+      if [ $target = "None" ]; then
+        echo -e "Enter the target servers details from Options 22 \n "
+        read dummy
+       else
+         echo -e  " Welcome to Pre-Validation \n"
+         sleep 5
+
+      fi
+      ;;
+    2)
+      if [ $target = "None" ]; then
+        echo -e "Enter the target servers details from Options 22 \n "
+        read dummy
+      else
+          echo -e " Welcome to User Administration \n"
+          while True
+            do
+              echo -e  $BIBlue" 1. User Creation \n"
+              echo -e  " 2. User Removal \n"
+              echo -e  " 3. Group Add  \n"
+              echo -e  " 0. EXIT \n"$NORMAL
+              read choice
+              case $choice in
+              0)
+                clear
+                break
+              ;;
+              1)
+                echo -e  " 1. Welcome To  User Creation \n"
+                cat ./Tesks/User_Creation/usercr_try.yml | sed "s/all/$target/g" >> usercr_try.yml
+                sh ./Tesks/User_Creation/src_script.sh
+
+              ;;
+              2)
+                echo -e  " 2. Welcome To User Removal \n"
+                cat ./Tesks/User_Creation/usercr_try.yml | sed "s/all/$target/g" >> usercr_try.yml
+                sh ./Tesks/User_Deletion/src_script.sh
+              ;;
+              3)
+                echo -e  " 3. Welcome To Group Add  \n"
+              ;;
+              *)
+                echo -e " Invalid choice !!!!! \n"
+                read dummy
+                continue
+              ;;
+              esac
+              done
+      fi
+    ;;
+
+    3)
+    if [ $target = "None" ]; then
+        echo -e "Enter the target servers details from Options 22 \n "
+        read dummy
+     else
+        echo -e " Welcome to Run AD Hoc Commands \n"
+    fi
+    ;;
+
+    22)
+      while true
+      do
+        clear
+        app_head
+        echo -e " 1. Target Server \n"
+        echo -e " 0. EXIT \n"
+        echo  -e "Enter your choice: "
+        read choice
+        case $choice in
+        0)
+          clear
+          break
+          ;;
+        1)
+           echo -e $BICyan ----------------------------------------------------------------------------
+                    echo -e "Available Env :  All -> for All Server in this Env or Host IP "
+                    cat ./hosts  | grep "\[" | sed "s/\[/ /g"  |  sed "s/\]/ /g"
+                    echo -e ----------------------------------------------------------------------------$NORMAL
+                    echo -e " Enter Your Choice : \c"
+                    read target
+          ;;
+          *)
+            echo -e " Invalid choice !!!!! \n"
+            read dummy
+            continue
+          ;;
+        esac
+        done
+        ;;
+
+        *)
+          echo -e " Invalid choice !!!!! \n"
+          read dummy
+          continue
+          ;;
+
+    esac
+
+  done

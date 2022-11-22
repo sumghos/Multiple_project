@@ -1,0 +1,11 @@
+---
+- hosts: all
+  become: true
+  become_user: root
+  tasks:
+    - name: User Removal Tasks
+      user : name=usernme state=absent remove=yes
+      register : userremoval
+    - debug: msg="user usernme has been removed from {{ ansible_hostname }}"
+      when: userremoval.changed
+    - debug: var=userremoval

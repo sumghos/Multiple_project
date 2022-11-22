@@ -1,0 +1,23 @@
+---
+- hosts: all
+  become: true
+  become_user: root
+  vars:
+    password: $6$2u.MW22rkemc1XqT$c7GqRxtGZ9s1d5on7wyiThhEguGgctoLW.X2CZS21Etgea2.l0UnU8YxDm2/uhSiVatSUwa0yhzyXxbzSAOXC/
+    userid: 1033
+    sgrp: 2034
+    comments: staff
+    username: sumit
+    pgrp: 2033
+    hmg: /home/sumit
+  tasks:
+    - name : User Exist
+      shell: id {{ username }}
+      register: user_exist
+      ignore_errors: True
+    - name : User Creation
+      user : name={{ username }} uid={{ userid }} home={{ /home/sumit }} comment={{ comments }} password={{ password }} group={{pgrp}} groups={{ sgrp }} append=yes
+      when : user_exist.rc !=0 and ansible_distribution == "RedHat"
+      register : user_creation
+    - debug: msg="User Name {{ username }} is already existing on the {{ ansible_hostname }}"
+      when : user_exist.rc==0
