@@ -1,0 +1,12 @@
+# pvc2.yaml
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: my-disk-claim-2
+spec:
+  resources:
+    requests:
+      storage: 40Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: fast

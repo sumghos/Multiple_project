@@ -1,0 +1,12 @@
+# pvc.yaml
+apiVersion: v1
+kind:  PersistentVolumeClaim
+metadata:
+  name:  my-disk-claim
+spec:
+  resources:
+    requests:
+      storage: 15Gi
+accessModes:
+  -ReadWriteOnce
+storageClassName: slow
