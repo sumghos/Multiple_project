@@ -1,0 +1,13 @@
+---
+- hosts : all
+  become: true
+  become_user: root
+  vars:
+    grpname: grpnme
+    gidnum: gidnum
+  tasks:
+    - name : Group Add Task
+      group : name={{ grpname }} gid={{ gidnum }} state=present
+      register : groupadd
+    - debug : msg="Group {{ grpname }} succesfully created on {{ ansible_hostname }}"
+      when: grpname.chnaged
