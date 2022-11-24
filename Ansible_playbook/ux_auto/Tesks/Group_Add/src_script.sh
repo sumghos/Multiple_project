@@ -1,6 +1,6 @@
 #!/bin/bash
 clear
-#"This script is created by Shikhar Verma"
+#"This script is created by Sumit Ghosh "
 BIRed='\033[1;91m'        # Red
 BIGreen='\033[1;92m'      # Green
 BIYellow='\033[1;93m'     # Yellow
